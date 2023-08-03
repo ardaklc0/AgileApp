@@ -1,0 +1,77 @@
+﻿@model AssignmentEpicUserViewModel
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+    }
+
+    .container {
+        width: 80%;
+        margin: 50px auto;
+    }
+
+    .dikdortgen {
+        height: 15%;
+        background-color: #f7f7f7;
+        border: 1px solid #ccc;
+        border-radius: 10px;
+        padding: 20px;
+        float: left;
+        margin-right: 20px;
+    }
+
+    .header {
+        font-weight: bold;
+        margin-bottom: 10px;
+    }
+
+    .content {
+        margin-bottom: 15px;
+    }
+
+    .list-group .list-group-item.active {
+        margin: 5px;
+        background-color: #88d6f3 !important;
+        border-color: #88d6f3 !important;
+    }
+
+    .list-group .list-group-item.active:hover {
+        background-color: #6ba4d5 !important;
+        border-color: #6ba4d5 !important;
+    }
+
+</style>
+
+
+@if (Model.assignments.Count() == 0)
+{
+    <h3>There is no assignment.</h3>
+}
+@foreach (var assignment in Model.assignments)
+{
+    var epic = Model.epics.FirstOrDefault(e => e.Id == assignment.EpicId);
+    var user = Model.users.FirstOrDefault(u => u.Id == assignment.UserId);
+    <div class="list-group">
+        <a href="#" class="list-group-item list-group-item-action flex-column align-items-start active">
+            <h5 class="mb-1">Assigned to @user.Surname, @user.Name</h5>
+            <div class="d-flex w-100 justify-content-between">
+                <h6 class="mb-1">@assignment.Name</h6>
+                <small>Created at @(assignment.CreationDate)</small>
+            </div>
+            <div class="d-flex w-100 justify-content-between">
+                <p class="mb-1">@assignment.Details</p>
+                @if (assignment.DueDate != null)
+                {
+                    <small>Due at @assignment.DueDate</small>
+                }
+            </div>
+            <small>@assignment.Comment</small>
+            <div class="d-flex w-100 justify-content-between">
+                <small>@epic.Name</small>
+                <small>Status: @assignment.Status</small>
+            </div>
+            
+        </a>
+    </div>
+}

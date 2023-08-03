@@ -1,0 +1,33 @@
+﻿@model TeamUserViewModel
+
+<style>
+    .card-container {
+        display: flex;
+        flex-wrap: wrap;
+    }
+
+    .card {
+        width: 18rem;
+        margin: 10px; /* İstenilen boşluğu ayarlayabilirsiniz */
+    }
+</style>
+
+<div class="card-container">
+    @foreach (var user in Model.users)
+    {
+        var team = Model.teams.FirstOrDefault(t => t.Id == user.TeamId);
+        <div class="card">
+            <img height="200" class="placeholder image">
+            <div class="card-body">
+                <h5 class="card-title">@user.Surname, @user.Name</h5>
+                <p class="card-text">@user.Email</p>
+            </div>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item">@user.PhoneNumber</li>
+                <li class="list-group-item">@user.Address</li>
+                <li class="list-group-item">@user.Description, @team.Name</li>
+            </ul>
+        </div>
+    }
+</div>
+
