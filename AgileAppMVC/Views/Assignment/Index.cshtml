@@ -1,16 +1,5 @@
 ﻿@model AssignmentEpicUserViewModel
 <style>
-    body {
-        font-family: Arial, sans-serif;
-        margin: 0;
-        padding: 0;
-    }
-
-    .container {
-        width: 80%;
-        margin: 50px auto;
-    }
-
     .dikdortgen {
         height: 15%;
         background-color: #f7f7f7;
@@ -40,7 +29,6 @@
         background-color: #6ba4d5 !important;
         border-color: #6ba4d5 !important;
     }
-
 </style>
 
 
@@ -53,22 +41,28 @@
     var epic = Model.epics.FirstOrDefault(e => e.Id == assignment.EpicId);
     var user = Model.users.FirstOrDefault(u => u.Id == assignment.UserId);
     <div class="list-group">
-        <a href="#" class="list-group-item list-group-item-action flex-column align-items-start active">
-            <h5 class="mb-1">Assigned to @user.Surname, @user.Name</h5>
+        <a class="list-group-item list-group-item-action flex-column align-items-start active" asp-action="Edit" asp-controller="Assignment" asp-route-id="@assignment.Id">
+            <h5 class="mb-1">Assignee: @user.Surname, @user.Name</h5>
             <div class="d-flex w-100 justify-content-between">
-                <h6 class="mb-1">@assignment.Name</h6>
-                <small>Created at @(assignment.CreationDate)</small>
+                <h6 class="mb-1">Assignment: @assignment.Name</h6>
+                <small>Created: @(assignment.CreationDate.ToString("dd/MM/yyyy"))</small>
             </div>
             <div class="d-flex w-100 justify-content-between">
-                <p class="mb-1">@assignment.Details</p>
+                @if (assignment.Details != null)
+                {
+                    <p class="mb-1">Details: @assignment.Details</p>
+                }
                 @if (assignment.DueDate != null)
                 {
-                    <small>Due at @assignment.DueDate</small>
+                    <small>Due at: @assignment.DueDate.ToString().Substring(0, 9)</small>
                 }
             </div>
-            <small>@assignment.Comment</small>
+            @if (assignment.Comment != null)
+            {
+                <small>Comment: @(assignment.Comment)</small>
+            }
             <div class="d-flex w-100 justify-content-between">
-                <small>@epic.Name</small>
+                <small>Epic: @epic.Name</small>
                 <small>Status: @assignment.Status</small>
             </div>
             

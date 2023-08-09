@@ -2,3 +2,112 @@
     ViewData["Title"] = "Home Page";
 }
 
+@model TaskViewModel
+
+<style>
+    .card-container {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px;
+        justify-content: flex-start;
+        align-items: flex-start;
+    }
+
+    .card {
+        width: calc(33% - 20px);
+        margin: 5px;
+    }
+
+    .card-header{
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .btn:hover {
+        background-color: lightgrey;
+        border-color: grey;
+    }
+</style>
+
+<div class="card-container">
+    <div class="card">
+        <h5 class="card-header">
+            <span style="order: 1;">TO DO</span>
+            <span class="card-number" style="order: 2;">@Model.ToDos.Count()</span>
+        </h5>
+        <div class="card-body">
+
+            @foreach (var todo in Model.ToDos)
+            {
+                <a class="btn card" style="width: auto; margin-right:0px; margin-left:0px;" asp-action="Edit" asp-controller="Assignment" asp-route-id="@todo.Id">
+                    <div class="card-body">
+                        <h5 class="card-title">@todo.Name</h5>
+                        <p class="card-text">@todo.Details</p>
+                        <div style="position: absolute; top: 3px; right: 10px; font-size: 12px;">
+                            Created: @(todo.CreationDate.ToString("dd/MM/yyyy"))
+                        </div>
+                        <div style="position: absolute; bottom: 5px; right: 10px; font-size: 12px;">
+                            Due: @(todo.DueDate != null ? todo.DueDate.ToString().Substring(0, 9) : "N/A")
+                        </div>
+                    </div>
+                </a>
+            }
+
+
+        </div>
+    </div>
+
+    <div class="card">
+        <h5 class="card-header">
+            <span style="order: 1;">IN PROGRESS</span>
+            <span class="card-number" style="order: 2;">@Model.InProgresses.Count()</span>
+        </h5>
+        <div class="card-body">
+
+            @foreach (var inprogress in Model.InProgresses)
+            {
+                <a class="btn card" style="width: auto; margin-right:0px; margin-left:0px;" asp-action="Edit" asp-controller="Assignment" asp-route-id="@inprogress.Id">
+                    <div class="card-body">
+                        <h5 class="card-title">@inprogress.Name</h5>
+                        <p class="card-text">@inprogress.Details</p>
+                        <div style="position: absolute; top: 3px; right: 10px; font-size: 12px;">
+                            Created: @(inprogress.CreationDate.ToString("dd/MM/yyyy"))
+                        </div>
+                        <div style="position: absolute; bottom: 5px; right: 10px; font-size: 12px;">
+                            Due: @(inprogress.DueDate != null ? inprogress.DueDate.ToString().Substring(0,9): "N/A")
+                        </div>
+                    </div>
+                </a>
+            }
+
+        </div>
+    </div>
+
+    <div class="card">
+        <h5 class="card-header">
+            <span style="order: 1;">DONE</span>
+            <span class="card-number" style="order: 2;">@Model.Dones.Count()</span>
+        </h5>
+        <div class="card-body">
+            
+            @foreach (var done in Model.Dones)
+            {
+                <a class="btn card" style="width: auto; margin-right:0px; margin-left:0px;" asp-action="Edit" asp-controller="Assignment" asp-route-id="@done.Id">
+                    <div class="card-body">
+                        <h5 class="card-title">@done.Name</h5>
+                        <p class="card-text">@done.Details</p>
+                        <div style="position: absolute; top: 3px; right: 10px; font-size: 12px;">
+                            Created: @(done.CreationDate.ToString("dd/MM/yyyy"))
+                        </div>
+                        <div style="position: absolute; bottom: 5px; right: 10px; font-size: 12px;">
+                            Due: @(done.DueDate != null ? done.DueDate.ToString().Substring(0, 9) : "N/A")
+                        </div>
+                    </div>
+                </a>
+            }
+
+        </div>
+    </div>
+
+</div>

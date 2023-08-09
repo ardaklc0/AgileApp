@@ -64,10 +64,53 @@ namespace AgileApp.Services
             return response;
         }
 
+        public async Task<UpdateExistingAssignmentRequest> GetAssignmentForUpdateAsync(int id)
+        {
+            var assignment = await repository.GetAsync(id);
+            var response = new UpdateExistingAssignmentRequest
+            {
+                Id = assignment.Id,
+                Name = assignment.Name,
+                UserId = assignment.UserId,
+                Status = assignment.Status,
+                CreationDate = assignment.CreationDate,
+                DueDate = assignment.DueDate,
+                Comment = assignment.Comment,
+                Details = assignment.Details,
+                IsDone = assignment.IsDone,
+                EpicId = assignment.EpicId,
+                AssignmentPageId = assignment.AssignmentPageId,
+                AssignmentLogo = assignment.AssignmentLogo,
+            };
+            return response;
+        }
+
         public async Task<IEnumerable<GetAssignmentDisplayResponse>> GetAssignmentsAsync()
         {
             var assignments = await repository.GetAllAsync();
             var responses = assignments.Select(assignment => new GetAssignmentDisplayResponse
+            {
+                Id = assignment.Id,
+                Name = assignment.Name,
+                UserId = assignment.UserId,
+                Status = assignment.Status,
+                CreationDate = assignment.CreationDate,
+                DueDate = assignment.DueDate,
+                Comment = assignment.Comment,
+                Details = assignment.Details,
+                IsDone = assignment.IsDone,
+                EpicId = assignment.EpicId,
+                AssignmentPageId = assignment.AssignmentPageId,
+                AssignmentLogo = assignment.AssignmentLogo,
+            });
+            return responses;
+        }
+
+        public async Task<IEnumerable<GetAssignmentDisplayResponse>> GetAssignmentWithRespectToStatusAsync(string status)
+        {
+            var assignments = await repository.GetAllAsync();
+            var assignmentsWrtStatus = assignments.Where(assignment => assignment.Status == status);
+            IEnumerable<GetAssignmentDisplayResponse> responses = assignmentsWrtStatus.Select(assignment => new GetAssignmentDisplayResponse
             {
                 Id = assignment.Id,
                 Name = assignment.Name,

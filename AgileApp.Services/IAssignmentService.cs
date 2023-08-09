@@ -11,7 +11,10 @@ namespace AgileApp.Services
     public interface IAssignmentService
     {
         Task<GetAssignmentDisplayResponse> GetAssignmentAsync(int id);
+        Task<UpdateExistingAssignmentRequest> GetAssignmentForUpdateAsync(int id);
+
         Task<IEnumerable<GetAssignmentDisplayResponse>> GetAssignmentsAsync();
+        Task<IEnumerable<GetAssignmentDisplayResponse>> GetAssignmentWithRespectToStatusAsync(string status);
         Task CreateAssignmentAsync(CreateNewAssignmentRequest request);
         Task DeleteAssignmentAsync(int id);
         Task UpdateAssignmentAsync(UpdateExistingAssignmentRequest request);
